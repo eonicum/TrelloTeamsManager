@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Управление организациями</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" />
+    <link rel="stylesheet" href="main.css" />
+
+    <script src="js/crypto-js.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/vue.min.js"></script>
+    <script src="js/client.js"></script>
+    <script src="js/main.js"></script>
+</head>
+
+<body>
+    <section id="app" v-cloak>
+        <input type="file" id="file-dialog" style="display: none" />
+
+        <div class="ui segment container" style="max-width: 700px !important;" v-bind:class="{ loading: loading }">
+            <button onclick="StartAuthorization()" v-if="!authorized" class="ui fluid positive button">Авторизация</button>
+
+            <div v-if="authorized" class="ui fluid positive button" v-on:click="createOrganization()">Добавить организацию</div>
+            <div v-if="authorized" class="ui items">
+                <div class="item" v-for="organization in organizations" style="background-color: #f4f4f4">
+                    <a class="ui red right corner label" v-on:click="removeOrganization(organization)" >
+                        <i class="remove icon"></i>
+                    </a>
+                    <div class="image" v-on:click="changeImage(organization)">
+                        <img v-if="organization.logoHash == null" src="https://semantic-ui.com/images/wireframe/image.png">
+                        <img v-else v-bind:src="'https://trello-logos.s3.amazonaws.com/' + organization.logoHash + '/170.png'" />
+                    </div>
+                    <div class="middle aligned content">
+                        <a v-if="organization.displayName == ''" class="header" v-on:click="changeOrganizationName(organization)">Название отсутствует</a>
+                        <a v-else class="header" v-on:click="changeOrganizationName(organization)">{{organization.displayName}}</a>
+                        <div class="meta">
+                            <span v-if="organization.desc == ''" v-on:click="changeOrganizationDescription(organization)">Описание отсутствует</span>
+                            <span v-else v-on:click="changeOrganizationDescription(organization)">{{organization.desc}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</body>
+
+</html>

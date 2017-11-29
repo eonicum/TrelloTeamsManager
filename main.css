@@ -1,0 +1,16 @@
+body {
+    background-color: lightgrey;
+}
+
+.segment {
+    background-color: white;
+}
+
+.item {
+    position: relative;
+    background-color: #f2f2f2;
+}
+
+[v-cloak] {
+    display: none;
+}
